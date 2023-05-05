@@ -5,55 +5,61 @@ import numpy as np
 from mne import Epochs, pick_types, find_events
 from sklearn.pipeline import Pipeline
 from mne.io import read_raw_edf
-
-
+from scipy.signal import butter, lfilter
+import matplotlib.pyplot as plt
+from mne.datasets import sample
+from mne.io import concatenate_raws
 
 #https://physionet.org/content/eegmmidb/1.0.0/
 #https://scikit-learn.org/stable/index.html
 #https://mne.tools/stable/index.html
 #https://neuraldatascience.io/7-eeg/erp_filtering.html
-
+path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def analyse() ->int:
 
-    run = [1, 2, 3, 4, 5, 6]
-    raw_data = []
-    raw_data = mne.datasets.eegbci.load_data(1, run)
-    # print(raw_data)
-    # for file in raw_data:
-        # data = mne.io.read_raw_edf(file)
-        # data_extract = data.get_data()
-        # print(data_extract)
-        # np.savetxt('train.csv', data_extract, delimiter = ' ')
-        #Load data brut
-    raw = read_raw_edf(raw_data[0], preload=True)
-    #extract data
-    low_cut = 0.1
-    hi_cut = 30
-    raw_filtered = raw.copy().filter(low_cut, hi_cut)
-    raw_filtered.plot_psd()
-    # events = find_events(raw)
-        #Filter the data
-    # event_id = {'Left': 1, 'Right': 2}
-    # tmin, tmax = -1., 4.
+    runs = [1, 2, 3]
+    raw_data = mne.datasets.eegbci.load_data(1, runs, path=path)
 
-    # picks = pick_types(raw.info, meg=False, eeg=True, stim=False, eog=False,
-    #                exclude='bads')
+    # get all the data needed in one
+    raw = concatenate_raws([read_raw_edf(data, preload=True) for data in raw_data])
+    # mne.datasets.eegbci.standardize(raw)
 
-    # epochs = Epochs(raw, events, event_id, tmin, tmax, proj=True, picks=picks,
-    #             baseline=None, preload=True)
+    # Filtering the data according to .....
+    raw_filter = raw.copy().filter(7, 30)
+    raw_filter.plot(scalings=0.0002)
+    plt.show()
 
-    # data_filtered = mne.filter(raw.get_data(), sfreq=raw.info['sfreq'], l_freq=0.5, h_freq=40)
-    # print(type(data_filtered))
-    print("--------")
+    # #Define electrode locations
+    # montage = mne.channels.make_standard_montage('standard_1005')
+
+    # #Set the electrode locations in the EEG data
+    # raw.set_montage(montage)
+
+    # # Plot the EEG data
+    # raw.plot_sensors()
+    # print(raw.info.ch_names)
+
+    # Separating mixed signal
+    # ica = mne.preprocessing.ICA(n_components=30, random_state=42)
+    # ica.fit(raw.copy().filter(1, 30))
+    # ica.plot_components()
+    # plt.show()
+
     return 0
 
 def main() ->int:
     
+    if len(sys.argv) == 2 and (sys.argv[1]=="-h" or sys.argv[1]=="--help"):
+        print("How to use it?")
+        print("1st arg: 1st subjet")
+        print("2nd arg: last subjet")
+        exit()
     # if len(sys.argv) != 3 :
     #     print("Wrong number of argv")
     #     return 0
-    analyse()
+    else :
+        analyse()
     # data.compute_psd().plot()
     # data.plot(duration=5, n_channels=30)
     return 0
