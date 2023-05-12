@@ -1,0 +1,6 @@
+import	mne
+
+def	dropBadChannel():
+{
+	
+}

@@ -19,11 +19,12 @@ from tkinter import ttk
 #https://neuraldatascience.io/7-eeg/erp_filtering.html
 path = "/Users/tonou/Desktop/test"
 
-def analyse() ->int:
+def analyse(subject:str) ->int:
 
     runs = [3, 4, 7]
     raw_data = mne.datasets.eegbci.load_data(1, runs, path=path)
 
+    print(subject)
     # get all the data needed in one
     raw = concatenate_raws([read_raw_edf(data, preload=True) for data in raw_data])
     # mne.datasets.eegbci.standardize(raw)
@@ -84,29 +85,10 @@ def main() ->int:
     tk.Radiobutton(window, text="Open and close both fists or both feet", font=("Arial", 12), variable=var, value=2).pack(anchor="w")
     tk.Radiobutton(window, text="Imagine opening and closing both fists or both feet", font=("Arial", 12), variable=var, value=3).pack(anchor="w")
 
-    selected_var = None
-
-    def toggle_buttons():
-        global selected_var
-        
-        # Uncheck the previously selected checkbox, if there was one
-        if selected_var is not None and selected_var.get() == 1:
-            selected_var.set(0)
-        
-        # Set the new selected checkbox
-        if var1.get() == 1:
-            selected_var = var1
-        elif var2.get() == 1:
-            selected_var = var2
-        elif var3.get() == 1:
-            selected_var = var3
-        elif var4.get() == 1:
-            selected_var = var4
-        else:
-            selected_var = None
-
-    # Create a button widget
-    buttonAnalyse = tk.Button(window, text="Analyst See Event ICA")
+    subjectValue = subjectVar.get()
+    print(subjectValue)
+       # Create a button widget
+    buttonAnalyse = tk.Button(window, text="Analyst See Event ICA", command=analyse(subjectVar.get()))
     buttonTrain = tk.Button(window, text="Train")
     buttonPredict = tk.Button(window, text="Predict")
     
