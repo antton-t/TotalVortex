@@ -12,12 +12,14 @@ from mne.io import concatenate_raws
 import tkinter as tk
 from tkinter import ttk
 from experience import experience
+from bad_channel import dropBadChannel
 
 #https://physionet.org/content/eegmmidb/1.0.0/
 #https://scikit-learn.org/stable/index.html
 #https://mne.tools/stable/index.html
 #https://neuraldatascience.io/7-eeg/erp_filtering.html
-path = "/Users/tonou/Desktop/test"
+# path = "/Users/tonou/Desktop/test"
+path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def analyse(subject:int, exp:int) ->int:
 
@@ -47,6 +49,11 @@ def analyse(subject:int, exp:int) ->int:
     spec = raw.compute_psd(fmin = 7, fmax= 30)
     spec.plot()
 
+    print("-------------------------------")
+    print(len(raw.info['ch_names']))
+    raw = dropBadChannel(raw)
+    print(len(raw.info['ch_names']))
+    print("+++++++++++++++++++++++++")
     channels = raw.info["ch_names"]
     ica = mne.preprocessing.ICA(n_components=len(channels) - 2, random_state=0)
     channel_name = {'T9', 'T10'}
@@ -55,9 +62,6 @@ def analyse(subject:int, exp:int) ->int:
     ica.plot_components(outlines='head')
 
     return 0
-
-def selectAll():
-    print("Test")
 
 def main() ->int:
     
