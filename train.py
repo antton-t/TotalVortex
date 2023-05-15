@@ -11,7 +11,7 @@ from mne.datasets import sample
 from mne.io import concatenate_raws
 import tkinter as tk
 from tkinter import ttk
-
+from experience import experience
 
 #https://physionet.org/content/eegmmidb/1.0.0/
 #https://scikit-learn.org/stable/index.html
@@ -19,15 +19,14 @@ from tkinter import ttk
 #https://neuraldatascience.io/7-eeg/erp_filtering.html
 path = "/Users/tonou/Desktop/test"
 
-def analyse(subject:str) ->int:
+def analyse(subject:int, exp:int) ->int:
 
-    runs = [3, 4, 7]
-    raw_data = mne.datasets.eegbci.load_data(1, runs, path=path)
+    runs = experience[exp]['runs']
+    raw_data = mne.datasets.eegbci.load_data(int(subject), runs, path=path)
 
-    print(subject)
     # get all the data needed in one
     raw = concatenate_raws([read_raw_edf(data, preload=True) for data in raw_data])
-    # mne.datasets.eegbci.standardize(raw)
+    mne.datasets.eegbci.standardize(raw)
 
     event_id = {'T1': 1, 'T2': 2}  # Define the event IDs
     events, _ = mne.events_from_annotations(raw, event_id=event_id)
@@ -41,7 +40,6 @@ def analyse(subject:str) ->int:
     raw.plot(scalings=0.0002)
 
     # #Define electrode locations
-    mne.datasets.eegbci.standardize(raw=raw)
     montage = mne.channels.make_standard_montage('biosemi64') # 64 electrodes
     raw.set_montage(montage, on_missing='ignore')
     # montage.plot()
@@ -73,22 +71,21 @@ def main() ->int:
     subjectFont.pack(padx=10, pady=10)
     subjectVar = tk.StringVar()
     subjectVar.set("Select the Subject")
-    options = ["All", "Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Subject 6", "Subject 7", "Subject 8", "Subject 9", "Subject 10", "Subject 11", "Subject 12", "Subject 13", "Subject 14", "Subject 15", "Subject 16", "Subject 17", "Subject 18", "Subject 19", "Subject 20", "Subject 21", "Subject 22", "Subject 23", "Subject 24", "Subject 25", "Subject 26", "Subject 27", "Subject 28", "Subject 29", "Subject 30", "Subject 31", "Subject 32", "Subject 33", "Subject 34", "Subject 35", "Subject 36", "Subject 37", "Subject 38", "Subject 39", "Subject 40", "Subject 41", "Subject 42", "Subject 43", "Subject 44", "Subject 45", "Subject 46", "Subject 47", "Subject 48", "Subject 49", "Subject 50", "Subject 51", "Subject 52", "Subject 53", "Subject 54", "Subject 55", "Subject 56", "Subject 57", "Subject 58", "Subject 59", "Subject 60", "Subject 61", "Subject 62", "Subject 63", "Subject 64", "Subject 65", "Subject 66", "Subject 67", "Subject 68", "Subject 69", "Subject 70", "Subject 71", "Subject 72", "Subject 73", "Subject 74", "Subject 75", "Subject 76", "Subject 77", "Subject 78", "Subject 79", "Subject 80", "Subject 81", "Subject 82", "Subject 83", "Subject 84", "Subject 85", "Subject 86", "Subject 87", "Subject 88", "Subject 89", "Subject 90", "Subject 91", "Subject 92", "Subject 93", "Subject 94", "Subject 95", "Subject 96", "Subject 97", "Subject 98", "Subject 99", "Subject 100", "Subject 101", "Subject 102", "Subject 103", "Subject 104", "Subject 105", "Subject 106", "Subject 107", "Subject 108", "Subject 109"]
+    options = list(range(1, 110))
+    #options = ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Subject 6", "Subject 7", "Subject 8", "Subject 9", "Subject 10", "Subject 11", "Subject 12", "Subject 13", "Subject 14", "Subject 15", "Subject 16", "Subject 17", "Subject 18", "Subject 19", "Subject 20", "Subject 21", "Subject 22", "Subject 23", "Subject 24", "Subject 25", "Subject 26", "Subject 27", "Subject 28", "Subject 29", "Subject 30", "Subject 31", "Subject 32", "Subject 33", "Subject 34", "Subject 35", "Subject 36", "Subject 37", "Subject 38", "Subject 39", "Subject 40", "Subject 41", "Subject 42", "Subject 43", "Subject 44", "Subject 45", "Subject 46", "Subject 47", "Subject 48", "Subject 49", "Subject 50", "Subject 51", "Subject 52", "Subject 53", "Subject 54", "Subject 55", "Subject 56", "Subject 57", "Subject 58", "Subject 59", "Subject 60", "Subject 61", "Subject 62", "Subject 63", "Subject 64", "Subject 65", "Subject 66", "Subject 67", "Subject 68", "Subject 69", "Subject 70", "Subject 71", "Subject 72", "Subject 73", "Subject 74", "Subject 75", "Subject 76", "Subject 77", "Subject 78", "Subject 79", "Subject 80", "Subject 81", "Subject 82", "Subject 83", "Subject 84", "Subject 85", "Subject 86", "Subject 87", "Subject 88", "Subject 89", "Subject 90", "Subject 91", "Subject 92", "Subject 93", "Subject 94", "Subject 95", "Subject 96", "Subject 97", "Subject 98", "Subject 99", "Subject 100", "Subject 101", "Subject 102", "Subject 103", "Subject 104", "Subject 105", "Subject 106", "Subject 107", "Subject 108", "Subject 109"]
     subjectSelect = ttk.Combobox(subjectFont, textvariable=subjectVar, values=options, state="normal")
 
     # Click and Unclick button
 
-    var = tk.IntVar(value=0)
+    expVar = tk.IntVar(value=0)
 
-    tk.Radiobutton(window, text="Open and close left or right fist", font=("Arial", 12), variable=var, value=0).pack(anchor="w")
-    tk.Radiobutton(window, text="Imagine opening and closing Left or right fist", font=("Arial", 12), variable=var, value=1).pack(anchor="w")
-    tk.Radiobutton(window, text="Open and close both fists or both feet", font=("Arial", 12), variable=var, value=2).pack(anchor="w")
-    tk.Radiobutton(window, text="Imagine opening and closing both fists or both feet", font=("Arial", 12), variable=var, value=3).pack(anchor="w")
+    tk.Radiobutton(window, text="Open and close left or right fist", font=("Arial", 12), variable=expVar, value=0).pack(anchor="w")
+    tk.Radiobutton(window, text="Imagine opening and closing Left or right fist", font=("Arial", 12), variable=expVar, value=1).pack(anchor="w")
+    tk.Radiobutton(window, text="Open and close both fists or both feet", font=("Arial", 12), variable=expVar, value=2).pack(anchor="w")
+    tk.Radiobutton(window, text="Imagine opening and closing both fists or both feet", font=("Arial", 12), variable=expVar, value=3).pack(anchor="w")
 
-    subjectValue = subjectVar.get()
-    print(subjectValue)
-       # Create a button widget
-    buttonAnalyse = tk.Button(window, text="Analyst See Event ICA", command=analyse(subjectVar.get()))
+    # Create a button widget
+    buttonAnalyse = tk.Button(window, text="Analyst See Event ICA", command=lambda:analyse(subjectVar.get(), expVar.get()))
     buttonTrain = tk.Button(window, text="Train")
     buttonPredict = tk.Button(window, text="Predict")
     
