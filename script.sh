@@ -1,1 +1,0 @@
-tar -cvf <data>.tar </mnt/nfs/homes/antton-t/mne_data/MNE-eegbci-data/files/eegmmidb/*>

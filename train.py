@@ -1,37 +1,76 @@
 from sklearn.pipeline import Pipeline
 import CSP
 import mne
+import numpy as np
+from sklearn.model_selection import ShuffleSplit, cross_val_score, train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from mne.decoding import CSP
+import matplotlib.pyplot as plt
+
 
 from experience import experience
 from bad_channel import dropBadChannel
+from data import getData
+from graph import plot_learning_curve
+
+# https://www.youtube.com/watch?v=t-twhNqgfSY
+# https://mne.tools/stable/auto_examples/decoding/decoding_csp_eeg.html
 
 path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def train(subject:int, exp:int) ->int:
 
     runs = experience[exp]['runs']
-    raw_data = mne.datasets.eegbci.load_data(int(subject), runs, path=path)
+    raw, events = getData(subject=(int(subject)), runs=runs)
 
-    # get all the data needed in one
-    raw = mne.io.concatenate_raws([mne.io.read_raw_edf(data, preload=True) for data in raw_data])
-    mne.datasets.eegbci.standardize(raw) #set channel names
+    # Apply band-pass filter
+    raw.filter(7.0, 30.0, fir_design="firwin", skip_by_annotation="edge")
 
-    #Define electrode locations
-    montage = mne.channels.make_standard_montage('biosemi64') # 64 electrodes
-    raw.set_montage(montage, on_missing='ignore')
-
-    raw = dropBadChannel(raw)
-
-    #Filter raw
-    raw.filter(7, 30)
-    event_id = {'T1': 1, 'T2': 2}  # Define the event IDs
-    events, _ = mne.events_from_annotations(raw, event_id=event_id)
-    # Creating annotation from events
     picks = mne.pick_types(raw.info, meg=False, eeg=True, stim=False, eog=False, exclude='bads')
-
-    #Epochs
-    epochs = mne.Epochs(raw, events, event_id, tmin=-1., tmax=4., proj=True, picks=picks, baseline=None, preload=True)
-    epochs_train = epochs.copy().crop(tmin=1., tmax=2.)
     
+    # See epochs
+    events, event_id = mne.events_from_annotations(raw)
+    epochs = mne.Epochs(raw=raw,events=events, event_id=event_id, tmin = -1., tmax=4., proj=True, picks=picks, baseline=None, preload=True)
+    epochs_train = epochs.copy().crop(tmin=1.0, tmax=2.0)
+    labels = epochs.events[:, -1]
 
+    # Define a monte-carlo cross-validation generator (reduce variance):
+    scores = []
+    epochs_data = epochs.get_data()
+    epochs_data_train = epochs_train.get_data()
+    cv = ShuffleSplit(10, test_size=0.2, random_state=0)
+    cv_split = cv.split(epochs_data_train)
+
+    # Assemble a classifier
+    lda = LinearDiscriminantAnalysis()
+    csp = CSP(n_components=15, reg=None, log=True, norm_trace=False)
+
+    # Use scikit-learn Pipeline with cross_val_score function
+    clf = Pipeline([("CSP", csp), ("LDA", lda)])
+    scores = cross_val_score(clf, epochs_data_train, labels, cv=cv, n_jobs=None)
+
+    # Printing the results
+    class_balance = np.mean(labels == labels[0])
+    class_balance = max(class_balance, 1.0 - class_balance)
+    # print("-------------------------")
+    # print("Classification accuracy: %f / Chance level: %f" % (np.mean(scores), class_balance))
+    # print("-------------------------")
+
+    # plot CSP patterns estimated on full data for visualization
+    csp.fit_transform(epochs_data, labels)
+    csp.plot_patterns(epochs.info, ch_type="eeg", units="Patterns (AU)", size=1.5)
+
+    # Fit pipeline to the exp
+    XTrain, XTest, YTrain, YTest = train_test_split(epochs_train, labels, random_state=0)
+   
+    # print("-----------------")
+    # print(type(epochs_train))
+    # print(type(labels))
+    # print("-----------------")
+    # Fit the data
+    clf.fit(epochs_data, labels)
+
+    title = "Learning Curves "
+    plot_learning_curve(clf, epochs_data, labels, cv=cv, n_jobs=-1)
+    plt.show()
     return 0

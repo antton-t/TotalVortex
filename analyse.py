@@ -17,7 +17,7 @@ path = "/mnt/nfs/homes/antton-t/goinfre"
 def analyse(subject:int, exp:int) ->int:
 
     runs = experience[exp]['runs']
-    raw, events = getData(subject=(int(subject)), runs=runs)
+    raw, _ = getData(subject=(int(subject)), runs=runs)
 
     #plot raw
     raw.plot(scalings=0.0002)
@@ -34,6 +34,5 @@ def analyse(subject:int, exp:int) ->int:
     ica = mne.preprocessing.ICA(n_components=len(channels), random_state=0)
     ica.fit(raw)
     ica.plot_components(outlines='head', inst=raw, show_names=False)
-
 
     return 0
