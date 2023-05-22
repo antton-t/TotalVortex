@@ -1,5 +1,4 @@
 from sklearn.pipeline import Pipeline
-import CSP
 import mne
 import numpy as np
 from sklearn.model_selection import ShuffleSplit, cross_val_score, train_test_split
@@ -43,7 +42,7 @@ def train(subject:int, exp:int) ->int:
 
     # Assemble a classifier
     lda = LinearDiscriminantAnalysis()
-    csp = CSP(n_components=15, reg=None, log=True, norm_trace=False)
+    csp = CSP(n_components=7, reg=None, log=True, norm_trace=False)
 
     # Use scikit-learn Pipeline with cross_val_score function
     clf = Pipeline([("CSP", csp), ("LDA", lda)])
