@@ -5,6 +5,7 @@ from tkinter import ttk
 
 from analyse import analyse
 from train import train
+from predict import predict
 
 #https://physionet.org/content/eegmmidb/1.0.0/
 #https://scikit-learn.org/stable/index.html
@@ -40,7 +41,7 @@ def main() ->int:
     # Create a button widget
     buttonAnalyse = tk.Button(window, text="Analyst See Event ICA", command=lambda:analyse(subjectVar.get(), expVar.get()))
     buttonTrain = tk.Button(window, text="Train", command=lambda:train(subjectVar.get(), expVar.get()))
-    buttonPredict = tk.Button(window, text="Predict")
+    buttonPredict = tk.Button(window, text="Predict", command=lambda:predict(subjectVar.get(), expVar.get()))
     
     # Add the button to the main window
     subjectSelect.pack()

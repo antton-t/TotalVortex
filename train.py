@@ -5,12 +5,15 @@ from sklearn.model_selection import ShuffleSplit, cross_val_score, train_test_sp
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from mne.decoding import CSP
 import matplotlib.pyplot as plt
-
+import os
+import joblib
 
 from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
 from graph import plot_learning_curve
+
+from utils import *
 
 # https://www.youtube.com/watch?v=t-twhNqgfSY
 # https://mne.tools/stable/auto_examples/decoding/decoding_csp_eeg.html
@@ -47,6 +50,7 @@ def train(subject:int, exp:int) ->int:
     # Use scikit-learn Pipeline with cross_val_score function
     clf = Pipeline([("CSP", csp), ("LDA", lda)])
     scores = cross_val_score(clf, epochs_data_train, labels, cv=cv, n_jobs=None)
+    scores_mean = np.mean(scores).round(2)
 
     # Printing the results
     class_balance = np.mean(labels == labels[0])
@@ -59,6 +63,9 @@ def train(subject:int, exp:int) ->int:
     csp.fit_transform(epochs_data, labels)
     csp.plot_patterns(epochs.info, ch_type="eeg", units="Patterns (AU)", size=1.5)
 
+    # Fitting data and labels
+    clf.fit(epochs_data, labels)
+
     # Fit pipeline to the exp
     XTrain, XTest, YTrain, YTest = train_test_split(epochs_train, labels, random_state=0)
    
@@ -68,6 +75,18 @@ def train(subject:int, exp:int) ->int:
     # print("-----------------")
     # Fit the data
     clf.fit(epochs_data, labels)
+
+    # Save classifier
+    save_path = SAVE_PATH + "/sub" + str(subject) + "/exp" + str(exp)
+    print("++++++++++++++++++++++++++++++++")
+    print(save_path)
+    print("++++++++++++++++++++++++++++++++")
+
+    os.makedirs(save_path, exist_ok=True)
+    joblib.dump(clf, save_path, compress=0, protocol=None, cache_size=None)
+
+    
+
 
     title = "Learning Curves "
     plot_learning_curve(clf, epochs_data, labels, cv=cv, n_jobs=-1)
