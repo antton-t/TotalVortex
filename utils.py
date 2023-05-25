@@ -6,5 +6,7 @@ SAVE_PATH = "./save"
 
 def getPath(sub) :
 
-    path = joblib.load(sub)
-    return path
+    try :
+        return joblib.load(sub)
+    except NameError:
+        print("Need to train it first")

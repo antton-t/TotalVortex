@@ -40,7 +40,7 @@ def train(subject:int, exp:int) ->int:
     scores = []
     epochs_data = epochs.get_data()
     epochs_data_train = epochs_train.get_data()
-    cv = ShuffleSplit(10, test_size=0.2, random_state=0)
+    cv = ShuffleSplit(10, test_size=0.8, random_state=42)
     cv_split = cv.split(epochs_data_train)
 
     # Assemble a classifier
@@ -83,12 +83,9 @@ def train(subject:int, exp:int) ->int:
     print("++++++++++++++++++++++++++++++++")
 
     os.makedirs(save_path, exist_ok=True)
-    joblib.dump(clf, save_path, compress=0, protocol=None, cache_size=None)
+    joblib.dump(clf, save_path + str(exp), compress=0, protocol=None, cache_size=None)
 
     
-
-
-    title = "Learning Curves "
     plot_learning_curve(clf, epochs_data, labels, cv=cv, n_jobs=-1)
     plt.show()
     return 0
