@@ -10,8 +10,8 @@ from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
 
-# path = "/Users/tonou/Desktop/test"
-path = "/mnt/nfs/homes/antton-t/goinfre"
+path = "/Users/tonou/Desktop/test"
+#path = "/mnt/nfs/homes/antton-t/goinfre"
 
 
 def analyse(subject:int, exp:int) ->int:

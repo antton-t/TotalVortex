@@ -5,8 +5,8 @@ from mne.io import read_raw_edf
 from experience import experience
 from bad_channel import dropBadChannel
 
-# path = "/Users/tonou/Desktop/test"
-path = "/mnt/nfs/homes/antton-t/goinfre"
+path = "/Users/tonou/Desktop/test"
+#path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def getData(subject, runs):
 

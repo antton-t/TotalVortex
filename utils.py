@@ -10,3 +10,5 @@ def getPath(sub) :
         return joblib.load(sub)
     except NameError:
         print("Need to train it first")
+
+

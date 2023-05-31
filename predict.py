@@ -36,8 +36,6 @@ def predict(subject:int, exp:int) ->int:
 
     _, X_test, _, y_test = train_test_split(epochs_train, labels, random_state=0)
 
-    sub = SAVE_PATH + "/sub" + str(subject) + "/exp" + str(exp)
-    model = getPath(sub + str(exp))
 
     epochs_data = epochs.get_data()
     epochs_data_2d = epochs_data
@@ -49,3 +47,5 @@ def predict(subject:int, exp:int) ->int:
     events_result = model.predict(epochs_data_2d)
 
     score = accuracy_score(events, events_result)
+
+    print(score)
