@@ -5,8 +5,8 @@ from mne.io import read_raw_edf
 from experience import experience
 from bad_channel import dropBadChannel
 
-path = "/Users/tonou/Desktop/test"
-#path = "/mnt/nfs/homes/antton-t/goinfre"
+# path = "/Users/tonou/Desktop/test"
+path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def getData(subject, runs):
 
@@ -34,7 +34,7 @@ def getData(subject, runs):
 
     # spec = raw.compute_psd(fmin = 7, fmax= 30)
 
-    raw = dropBadChannel(raw)
+    # raw = dropBadChannel(raw)
     channels = raw.info["ch_names"]
     channel_name = {'T9', 'T10'}
     raw.drop_channels(ch_names=channel_name, on_missing='ignore')

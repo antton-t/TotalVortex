@@ -10,8 +10,8 @@ from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
 
-path = "/Users/tonou/Desktop/test"
-#path = "/mnt/nfs/homes/antton-t/goinfre"
+# path = "/Users/tonou/Desktop/test"
+path = "/mnt/nfs/homes/antton-t/goinfre"
 
 
 def analyse(subject:int, exp:int) ->int:
@@ -20,13 +20,25 @@ def analyse(subject:int, exp:int) ->int:
     raw, _ = getData(subject=(int(subject)), runs=runs)
 
     #plot raw
-    raw.plot(scalings=0.0002)
+    title = "Before treatement"
+    raw.plot(scalings=0.0002, title=title)
+    plt.show()
 
     # https://www.researchgate.net/publication/326859647_A_Reproducible_MEGEEG_Group_Study_With_the_MNE_Software_Recommendations_Quality_Assessments_and_Good_Practices
     # https://www.biorxiv.org/content/biorxiv/early/2022/09/14/2022.09.12.507592.full.pdf
 
-    spec = raw.compute_psd(fmin = 7, fmax= 30)
+    spec = raw.compute_psd(fmin = 8, fmax= 40)
     spec.plot()
+    plt.show()
+
+    # Drop channel
+    raw = dropBadChannel(raw)
+
+    title = "After treatement"
+    raw.plot(scalings=0.0002, title=title)
+    plt.show()
+    spec = raw.compute_psd(fmin=2.0, fmax=40.0).plot(average=True, picks="data", exclude="bads")
+    plt.show()
 
     # get ica
     channels = raw.info["ch_names"]
@@ -34,5 +46,6 @@ def analyse(subject:int, exp:int) ->int:
     ica = mne.preprocessing.ICA(n_components=len(channels), random_state=0)
     ica.fit(raw)
     ica.plot_components(outlines='head', inst=raw, show_names=False)
+    plt.show()
 
     return 0

@@ -37,15 +37,15 @@ def predict(subject:int, exp:int) ->int:
     _, X_test, _, y_test = train_test_split(epochs_train, labels, random_state=0)
 
 
-    epochs_data = epochs.get_data()
-    epochs_data_2d = epochs_data
+    # epochs_data = epochs.get_data()
+    # epochs_data_2d = epochs_data
 
-    model.fit(epochs_data_2d, labels)
+    # model.fit(epochs_data_2d, labels)
 
-    events = epochs.events[:, -1]
+    # events = epochs.events[:, -1]
 
-    events_result = model.predict(epochs_data_2d)
+    # events_result = model.predict(epochs_data_2d)
 
-    score = accuracy_score(events, events_result)
+    # score = accuracy_score(events, events_result)
 
     print(score)
