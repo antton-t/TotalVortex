@@ -63,13 +63,12 @@ def train(subject:int, exp:int) ->int:
 
     # plot CSP patterns estimated on full data for visualization
     csp.fit_transform(epochs_data, labels)
-    csp.plot_patterns(epochs.info, ch_type="eeg", units="Patterns (AU)", size=1.5)
-
+    
     # Fitting data and labels
     clf.fit(epochs_data, labels)
 
     # Fit pipeline to the exp
-    XTrain, XTest, YTrain, YTest = train_test_split(epochs_train, labels, random_state=0)
+    XTrain, XTest, YTrain, YTest = train_test_split(epochs_train, labels, train_size=0.8, random_state=0)
    
     # print("-----------------")
     # print(type(epochs_train))
@@ -86,8 +85,5 @@ def train(subject:int, exp:int) ->int:
 
     os.makedirs(save_path, exist_ok=True)
     joblib.dump(clf, save_path + str(exp), compress=0, protocol=None, cache_size=None)
-
-    
-    plot_learning_curve(clf, epochs_data, labels, cv=cv, n_jobs=-1)
-    plt.show()
+ 
     return 0

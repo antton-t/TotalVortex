@@ -34,18 +34,13 @@ def predict(subject:int, exp:int) ->int:
 
     cv = ShuffleSplit(10, test_size=0.2, random_state=0)
 
-    _, X_test, _, y_test = train_test_split(epochs_train, labels, random_state=0)
+    _, X_test, _, y_test = train_test_split(epochs_train, labels, train_size=0.8, random_state=0)
 
+    save_path = SAVE_PATH + "/sub" + str(subject) + "/exp" + str(exp)
+    model = joblib.load(save_path + str(exp))
 
-    # epochs_data = epochs.get_data()
-    # epochs_data_2d = epochs_data
+    predict = model.predict(X_test)
 
-    # model.fit(epochs_data_2d, labels)
+    score = accuracy_score(predict, y_test)
 
-    # events = epochs.events[:, -1]
-
-    # events_result = model.predict(epochs_data_2d)
-
-    # score = accuracy_score(events, events_result)
-
-    print(score)
+    print('Accuracy score = ' + str(score))
