@@ -51,8 +51,6 @@ def train(subject:int, exp:int) ->int:
 
     # fit our pipeline to the experiment
     X_train, _, Y_train, _ = train_test_split(epochs_data_train, labels, random_state=0)
-    print(type(epochs_data_train))
-    print(type(labels))
     clf.fit(X_train, Y_train)
     
     scores = cross_val_score(clf, epochs_data_train, labels, n_jobs=None)
