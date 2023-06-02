@@ -13,6 +13,7 @@ from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
 from graph import plot_learning_curve
+from colors import colors
 
 from utils import *
 
@@ -66,6 +67,10 @@ def train(subject:int, exp:int) ->int:
     os.makedirs(save_path, exist_ok=True)
     joblib.dump(clf, save_path + str(exp), compress=0, protocol=None, cache_size=None)
 
-    print("Cross ValScore " + str(scores_mean))
- 
+    if scores_mean >= 0.5 :
+        print(f"{colors.Green}Cross ValScore {str(scores_mean)}{colors.Reset}")
+    else :
+        print(f"{colors.Red}Cross ValScore {str(scores_mean)} {colors.Reset}")
+    print(f"{colors.Yellow}Done ---------Subject {subject}------------- {colors.Reset}")
+
     return 0

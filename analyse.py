@@ -5,7 +5,7 @@ import mne
 from mne.io import read_raw_edf
 from sklearn.pipeline import Pipeline
 
-
+from colors import colors
 from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
@@ -47,5 +47,6 @@ def analyse(subject:int, exp:int) ->int:
     ica.fit(raw)
     ica.plot_components(outlines='head', inst=raw, show_names=False)
     plt.show()
+    print(f"{colors.Yellow} Done ---------Subject {subject}------------- {colors.Reset}")
 
     return 0

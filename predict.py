@@ -3,12 +3,14 @@ import numpy as np
 import mne
 from sklearn.model_selection import train_test_split, ShuffleSplit, cross_val_score
 from sklearn.metrics import accuracy_score
+import time
 
 
 from experience import experience
 from data import getData
 from utils import getPath
 from utils import *
+from colors import colors
 
 
 def predict(subject:int, exp:int) ->int:
@@ -25,12 +27,7 @@ def predict(subject:int, exp:int) ->int:
     picks = mne.pick_types(raw.info, meg=False, eeg=True, stim=False, eog=False)
     epochs = mne.Epochs(raw, events, event_id, tmin, tmax, proj=True, picks=picks, baseline=None, preload=True, verbose=50)
     labels = epochs.events[:, -1]
-    print("+++++++++++++++++++++++")
-    print(labels)
-    print("--------------------------")
     epochs_train = epochs.copy().crop(tmin=1.0, tmax=4.0).get_data()
-    print(epochs_train.shape)
-    print("++++++++++++++++++++++++++++")
 
     cv = ShuffleSplit(10, test_size=0.2, random_state=0)
 
@@ -40,7 +37,15 @@ def predict(subject:int, exp:int) ->int:
     model = joblib.load(save_path + str(exp))
 
     predict = model.predict(X_test)
+    for i, (pred, true) in enumerate(zip(predict, y_test), start = 1) :
+        print(f"Epoch {i}")
+        print(f"real {true} ==> prediction {pred}")
+        time.sleep(1)
 
     score = accuracy_score(predict, y_test)
 
-    print('Accuracy score = ' + str(score))
+    if (score >= 60) :
+        print(f"{colors.Blue}Accuracy score => {str(score)}{colors.Reset}")
+    else :
+        print(f"{colors.Red}Accuracy score => {str(score)}{colors.Reset}")
+    print(f"{colors.Yellow} Done ---------Subject {subject}------------- {colors.Reset}")
