@@ -37,7 +37,7 @@ def analyse(subject:int, exp:int) ->int:
     title = "After treatement"
     raw.plot(scalings=0.0002, title=title)
     plt.show()
-    spec = raw.compute_psd(fmin=2.0, fmax=40.0).plot(average=True, picks="data", exclude="bads")
+    spec = raw.compute_psd(fmin=8.0, fmax=40.0).plot(average=True, picks="data", exclude="bads")
     plt.show()
 
     # get ica

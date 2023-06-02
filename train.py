@@ -12,7 +12,6 @@ from CSP import CSP
 from experience import experience
 from bad_channel import dropBadChannel
 from data import getData
-from graph import plot_learning_curve
 from colors import colors
 
 from utils import *
