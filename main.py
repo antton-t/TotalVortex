@@ -46,7 +46,7 @@ def main() ->int:
     # Create a button widget
     buttonAnalyse = tk.Button(window, text="Analyst See Event ICA", command=lambda:analyse(subjectVar.get(), expVar.get()))
     buttonTrain = tk.Button(window, text="Train", command=lambda:train(subjectVar.get(), expVar.get()))
-    buttonPredict = tk.Button(window, text="Predict", command=lambda:predict(subjectVar.get(), expVar.get()))
+    buttonPredict = tk.Button(window, text="Predict", command=lambda:predict(subjectVar.get(), expVar.get()), state="disabled")
     
     # Add the button to the main window
     subjectSelect.pack()

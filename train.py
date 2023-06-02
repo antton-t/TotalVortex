@@ -44,7 +44,6 @@ def train(subject:int, exp:int) ->int:
     scores = []
     epochs_data = epochs.get_data()
     epochs_data_train = epochs_train.get_data()
-    cv = ShuffleSplit(10, test_size=0.8, random_state=42)
     
     csp = CSP(n_components=6)
     lda = LinearDiscriminantAnalysis()
