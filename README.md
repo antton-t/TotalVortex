@@ -1,12 +1,12 @@
-# TotalVortex
+# <h1>TotalVortex</h1>
 
-Brain computer interface with machine learning based on electoencephalographic data.
+Brain computer interface with machine learning based on electoencephalographic data. <br />
 
-Physionet
-https://physionet.org/content/eegmmidb/1.0.0/
+<h2>Physionet <br /></h2>
+https://physionet.org/content/eegmmidb/1.0.0/ <br />
 
-Abstract
-This data set consists of over 1500 one- and two-minute EEG recordings, obtained from 109 volunteers, as described below.
+<h2>Abstract <br /></h2>
+This data set consists of over 1500 one- and two-minute EEG recordings, obtained from 109 volunteers, as described below. <br />
 
 ![Screenshot from 2023-06-02 14-39-10](https://github.com/antton-t/TotalVortex/assets/64638111/56ab3e84-62b6-420b-9570-f42254437fe8)
 ![Screenshot from 2023-06-02 14-39-43](https://github.com/antton-t/TotalVortex/assets/64638111/ffbd25d5-756c-4087-9cf6-606b83654b4d)
@@ -17,5 +17,5 @@ This data set consists of over 1500 one- and two-minute EEG recordings, obtained
 ![Screenshot from 2023-06-02 14-43-21](https://github.com/antton-t/TotalVortex/assets/64638111/a67bff63-3e1e-4bfc-8d2d-f2adaf8a4f5f)
 
 
-Acknowledgments
+Acknowledgments <br />
 This data set was created and contributed to PhysioBank by Gerwin Schalk (schalk at wadsworth dot org) and his colleagues at the BCI R&D Program, Wadsworth Center, New York State Department of Health, Albany, NY. W.A. Sarnacki collected the data. Aditya Joshi compiled the dataset and prepared the documentation. D.J. McFarland and J.R. Wolpaw were responsible for experimental design and project oversight, respectively. This work was supported by grants from NIH/NIBIB ((EB006356 (GS) and EB00856 (JRW and GS)).
