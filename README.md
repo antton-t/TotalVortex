@@ -11,10 +11,10 @@ This data set consists of over 1500 one- and two-minute EEG recordings, obtained
 <h2>Experimental Protocol <br /></h2>
 Subjects performed different motor/imagery tasks while 64-channel EEG were recorded using the BCI2000 system (http://www.bci2000.org). Each subject performed 14 experimental runs: two one-minute baseline runs (one with eyes open, one with eyes closed), and three two-minute runs of each of the four following tasks:<br />
 
-A target appears on either the left or the right side of the screen. The subject opens and closes the corresponding fist until the target disappears. Then the subject relaxes.<br />
-A target appears on either the left or the right side of the screen. The subject imagines opening and closing the corresponding fist until the target disappears. Then the subject relaxes.<br />
-A target appears on either the top or the bottom of the screen. The subject opens and closes either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.<br />
-A target appears on either the top or the bottom of the screen. The subject imagines opening and closing either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A target appears on either the left or the right side of the screen. The subject opens and closes the corresponding fist until the target disappears. Then the subject relaxes.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A target appears on either the left or the right side of the screen. The subject imagines opening and closing the corresponding fist until the target disappears. Then the subject relaxes.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A target appears on either the top or the bottom of the screen. The subject opens and closes either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A target appears on either the top or the bottom of the screen. The subject imagines opening and closing either both fists (if the target is on top) or both feet (if the target is on the bottom) until the target disappears. Then the subject relaxes.<br />
 
 ![Screenshot from 2023-06-02 14-39-10](https://github.com/antton-t/TotalVortex/assets/64638111/56ab3e84-62b6-420b-9570-f42254437fe8)
 ![Screenshot from 2023-06-02 14-39-43](https://github.com/antton-t/TotalVortex/assets/64638111/ffbd25d5-756c-4087-9cf6-606b83654b4d)
