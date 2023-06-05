@@ -22,10 +22,10 @@ Subjects performed different motor/imagery tasks while 64-channel EEG were recor
 <h2>Event no filter<br /></h2>
 
 ![Screenshot from 2023-06-02 14-39-43](https://github.com/antton-t/TotalVortex/assets/64638111/ffbd25d5-756c-4087-9cf6-606b83654b4d)
-<h2>Event filtered<br /></h2>
 
 ![Screenshot from 2023-06-02 14-40-02](https://github.com/antton-t/TotalVortex/assets/64638111/bd2bf668-e509-43a2-a845-6165488cc985)
-<h2>Spectral <br /></h2>
+
+<h2>Event filtered<br /></h2>
 
 ![Screenshot from 2023-06-02 14-40-20](https://github.com/antton-t/TotalVortex/assets/64638111/f069f8b0-5064-4138-bfa2-e24368ab0fa8)
 
