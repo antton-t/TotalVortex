@@ -18,6 +18,8 @@ Subjects performed different motor/imagery tasks while 64-channel EEG were recor
 
 <h2>How to use the program <br /></h2>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choose the path you want to store the data download in data.py. Then launch it with python3 main.py. Have fun. For predict you can only predict what have been train (patient and experience).
+
 ![Screenshot from 2023-06-02 14-39-10](https://github.com/antton-t/TotalVortex/assets/64638111/56ab3e84-62b6-420b-9570-f42254437fe8)
 <h2>Event no filter<br /></h2>
 
