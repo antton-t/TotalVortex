@@ -2,6 +2,7 @@ import mne
 from mne import Epochs, pick_types, find_events
 import tkinter as tk
 from tkinter import ttk
+import json
 
 from analyse import analyse
 from train import train

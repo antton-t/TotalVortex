@@ -7,6 +7,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import matplotlib.pyplot as plt
 import os
 import joblib
+import json
 
 from CSP import CSP
 from experience import experience
@@ -18,10 +19,6 @@ from utils import *
 
 # https://www.youtube.com/watch?v=t-twhNqgfSY
 # https://mne.tools/stable/auto_examples/decoding/decoding_csp_eeg.html
-
-# path = "/mnt/nfs/homes/antton-t/goinfre"
-path = "/mnt/nfs/homes/antton-t/goinfre"
-
 
 def train(subject:int, exp:int) ->int:
 

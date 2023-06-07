@@ -1,12 +1,15 @@
 from mne.io import concatenate_raws
 import mne
 from mne.io import read_raw_edf
+import json
 
 from experience import experience
 from bad_channel import dropBadChannel
+from utils import getJsonValue
 
-# path = "/Users/tonou/Desktop/test"
-path = "/mnt/nfs/homes/antton-t/goinfre"
+
+path = "/Users/tonou/Desktop/test"
+#path = "/mnt/nfs/homes/antton-t/goinfre"
 
 def getData(subject, runs):
 
